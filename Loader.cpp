@@ -14,8 +14,7 @@ void Loader::loadDll() {
     }
     else
     {
-        throw std::exception();
-       // throw std::exception("invalid plugin path");
+       throw std::runtime_error("invalid plugin path");
     }
 }
 
@@ -24,8 +23,7 @@ void Loader::getFunc(std::string const& fileName) {
     HMODULE hm = LoadLibraryA((pluginsPath + fileName).c_str());
     auto error = GetLastError();
     if (hm == nullptr) {
-        throw std::exception();
-        //throw std::exception("dll not found");
+        throw std::runtime_error("dll not found");
     }
 
     std::string funcName = fileName;
@@ -37,12 +35,9 @@ void Loader::getFunc(std::string const& fileName) {
         unaryFunction ufunc = (unaryFunction)GetProcAddress(hm, "uniOper");
         if (ufunc == nullptr)
         {
-            throw std::exception();
-           // throw std::exception("function not found");
+            throw std::runtime_error("function not found");
         }
-
         unaryFunctions.insert(std::pair<std::string, unaryFunction>(funcName, ufunc));
-
     }
     else
     {

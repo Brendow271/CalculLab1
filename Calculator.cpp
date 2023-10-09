@@ -39,11 +39,9 @@ void Calculator::ReadString(std::string str) {
                     i++;
                     continue;
                 }
-                throw std::exception();
-                //throw std::exception("uncorrect expression");
+                throw std::runtime_error("uncorrect expression");
             }
-            throw std::exception();
-           // throw std::exception("uncorrect expression");
+            throw std::runtime_error("uncorrect expression");
         }
     }
     int count = 0;
@@ -55,15 +53,12 @@ void Calculator::ReadString(std::string str) {
         if (str[i] == ')') {
             count--;
             if (count < 0) {
-                //throw std::exception();
-                //throw "uncorrect expression";
-              //  throw std::exception("uncorrect expression");
+               throw std::runtime_error("uncorrect expression");
             }
         }
     }
     if (count != 0) {
-        throw std::exception();
-      //  throw std::exception("uncorrect expression");
+        throw std::runtime_error("uncorrect expression");
     }
     for (int i = 0; i < str.size(); ++i)
     {
