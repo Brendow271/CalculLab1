@@ -1,3 +1,0 @@
-E:/!Study/3/5/C++/CalcLab1/cmake-build-debug/CMakeFiles/CalcLab1.dir
-E:/!Study/3/5/C++/CalcLab1/cmake-build-debug/CMakeFiles/edit_cache.dir
-E:/!Study/3/5/C++/CalcLab1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
