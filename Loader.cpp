@@ -4,7 +4,6 @@ void Loader::loadDll() {
     WIN32_FIND_DATAA wfd;
 
     HANDLE const hFind = FindFirstFileA((pluginsPath + std::string("*.dll")).c_str(), &wfd);
-
     if (hFind != INVALID_HANDLE_VALUE) {
         do {
             std::string dllFileName(wfd.cFileName);
@@ -15,6 +14,7 @@ void Loader::loadDll() {
     }
     else
     {
+        throw std::exception();
        // throw std::exception("invalid plugin path");
     }
 }
@@ -24,11 +24,12 @@ void Loader::getFunc(std::string const& fileName) {
     HMODULE hm = LoadLibraryA((pluginsPath + fileName).c_str());
     auto error = GetLastError();
     if (hm == nullptr) {
-        // throw std::exception("dll not found");
+        throw std::exception();
+        //throw std::exception("dll not found");
     }
 
-    std::string funcName = fileName.substr(0, 1);
-
+    std::string funcName = fileName;
+    funcName.erase(0,3).erase(funcName.find('.'),4).erase(1,funcName.length()-1);
 
     binaryFunction bfunc = (binaryFunction)GetProcAddress(hm, "binOper");
     if (bfunc == nullptr)
@@ -36,6 +37,7 @@ void Loader::getFunc(std::string const& fileName) {
         unaryFunction ufunc = (unaryFunction)GetProcAddress(hm, "uniOper");
         if (ufunc == nullptr)
         {
+            throw std::exception();
            // throw std::exception("function not found");
         }
 

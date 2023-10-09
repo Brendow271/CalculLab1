@@ -51,25 +51,25 @@ build cmake_object_order_depends_target_CalcLab1: phony || CMakeFiles/CalcLab1.d
 
 build CMakeFiles/CalcLab1.dir/Calculator.cpp.obj: CXX_COMPILER__CalcLab1_Debug E$:/!Study/3/5/C++/CalcLab1/Calculator.cpp || cmake_object_order_depends_target_CalcLab1
   DEP_FILE = CMakeFiles\CalcLab1.dir\Calculator.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++23
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
   OBJECT_DIR = CMakeFiles\CalcLab1.dir
   OBJECT_FILE_DIR = CMakeFiles\CalcLab1.dir
 
 build CMakeFiles/CalcLab1.dir/main.cpp.obj: CXX_COMPILER__CalcLab1_Debug E$:/!Study/3/5/C++/CalcLab1/main.cpp || cmake_object_order_depends_target_CalcLab1
   DEP_FILE = CMakeFiles\CalcLab1.dir\main.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++23
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
   OBJECT_DIR = CMakeFiles\CalcLab1.dir
   OBJECT_FILE_DIR = CMakeFiles\CalcLab1.dir
 
 build CMakeFiles/CalcLab1.dir/Loader.cpp.obj: CXX_COMPILER__CalcLab1_Debug E$:/!Study/3/5/C++/CalcLab1/Loader.cpp || cmake_object_order_depends_target_CalcLab1
   DEP_FILE = CMakeFiles\CalcLab1.dir\Loader.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++23
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
   OBJECT_DIR = CMakeFiles\CalcLab1.dir
   OBJECT_FILE_DIR = CMakeFiles\CalcLab1.dir
 
 build CMakeFiles/CalcLab1.dir/Operation.cpp.obj: CXX_COMPILER__CalcLab1_Debug E$:/!Study/3/5/C++/CalcLab1/Operation.cpp || cmake_object_order_depends_target_CalcLab1
   DEP_FILE = CMakeFiles\CalcLab1.dir\Operation.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++23
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
   OBJECT_DIR = CMakeFiles\CalcLab1.dir
   OBJECT_FILE_DIR = CMakeFiles\CalcLab1.dir
 
