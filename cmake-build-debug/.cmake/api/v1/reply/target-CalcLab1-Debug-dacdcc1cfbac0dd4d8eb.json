@@ -13,8 +13,7 @@
 	{
 		"commands" : 
 		[
-			"add_executable",
-			"set_property"
+			"add_executable"
 		],
 		"files" : 
 		[
@@ -30,12 +29,6 @@
 				"file" : 0,
 				"line" : 7,
 				"parent" : 0
-			},
-			{
-				"command" : 1,
-				"file" : 0,
-				"line" : 8,
-				"parent" : 0
 			}
 		]
 	},
@@ -48,7 +41,7 @@
 					"fragment" : "-g -fdiagnostics-color=always"
 				},
 				{
-					"fragment" : "-std=gnu++23"
+					"fragment" : "-std=gnu++20"
 				}
 			],
 			"language" : "CXX",
@@ -56,9 +49,9 @@
 			{
 				"backtraces" : 
 				[
-					2
+					1
 				],
-				"standard" : "23"
+				"standard" : "20"
 			},
 			"sourceIndexes" : 
 			[
