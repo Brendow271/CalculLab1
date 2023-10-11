@@ -27,7 +27,7 @@ void Loader::getFunc(std::string const& fileName) {
     }
 
     std::string funcName = fileName;
-    funcName.erase(0,3).erase(funcName.find('.'),4).erase(1,funcName.length()-1);
+    funcName.erase(0,3).erase(funcName.find('.'),4);
 
     binaryFunction bfunc = (binaryFunction)GetProcAddress(hm, "binOper");
     if (bfunc == nullptr)
@@ -39,13 +39,13 @@ void Loader::getFunc(std::string const& fileName) {
         }
         unaryFunctions.insert(std::pair<std::string, unaryFunction>(funcName, ufunc));
     }
-    else
-    {
-        if (funcName == "P") {
-            funcName = "^";
-        }
-        binaryFunctions.insert(std::pair<std::string, binaryFunction>(funcName, bfunc));
-    }
+//    else
+//    {
+//        if (funcName == "P") {
+//            funcName = "^";
+//        }
+//        binaryFunctions.insert(std::pair<std::string, binaryFunction>(funcName, bfunc));
+//    }
 }
 
 double Loader::makeOperation(double const& a, std::string const& funcName, double const& b) {

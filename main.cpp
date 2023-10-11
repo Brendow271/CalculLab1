@@ -2,6 +2,7 @@
 #include <iostream>
 int main(void) {
     Calculator calc;
+    calc.addDll();
     std::string str;
     std::getline(std::cin, str);
     while (!str.empty()) {

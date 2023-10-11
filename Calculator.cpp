@@ -3,45 +3,45 @@
 #include <sstream>
 #include <map>
 #include <stack>
-#include "Loader.h"
+
 
 Calculator::Calculator() {
-    map.insert(std::make_pair('(', 1));
-    map.insert(std::make_pair('+', 2));
-    map.insert(std::make_pair('-', 2));
-    map.insert(std::make_pair('*', 3));
-    map.insert(std::make_pair('/', 3));
-    map.insert(std::make_pair('^', 4));
-    map.insert(std::make_pair('s', 5));
-    map.insert(std::make_pair('c', 5));
-    map.insert(std::make_pair('l', 5));
+    map.insert(std::make_pair("(", 1));
+    map.insert(std::make_pair("+", 2));
+    map.insert(std::make_pair("-", 2));
+    map.insert(std::make_pair("*", 3));
+    map.insert(std::make_pair("/", 3));
+//    map.insert(std::make_pair('^', 4));
+//    map.insert(std::make_pair('s', 5));
+//    map.insert(std::make_pair('c', 5));
+//    map.insert(std::make_pair('l', 5));
 }
 void Calculator::ReadString(std::string str) {
     std::string res;
     std::string::size_type ind;
+    std::string tempStr = "";
     while ((ind = str.find(' ')) != std::string::npos)
     {
         str.erase(ind, 1);
     }
-    for (int i = 0; i < str.size(); ++i) {
-        auto c = str[i];
-        if (isalpha(c)) {
-            if ((str[i + 1]) && (str[i + 2])) {
-                if ((c == 's') && (str[i + 1] == 'i') && (str[i + 2] == 'n')) {
-                    i += 2;
-                    continue;
-                }
-                if ((c == 'c') && (str[i + 1] == 'o') && (str[i + 2] == 's')) {
-                    i += 2;
-                    continue;
-                }
-                if ((c == 'l') && (str[i + 1] == 'n')) {
-                    i++;
-                    continue;
-                }
-                throw std::runtime_error("uncorrect expression");
+    for (int i = 0; i < str.size(); i++) {
+        char c = str[i];
+        while(isalpha(c))
+        {
+            tempStr += c;
+            if (++i < str.length())
+                c = str[i];
+
+        }
+        if(!(c >= '0' && c <= '9') && !(map.contains({c})))
+        {
+            if (!(load.containsUnaryFunc(tempStr) || load.containsBinaryFunc(tempStr)))
+                throw std::runtime_error("incorrect expression1");
+            else
+            {
+                map.insert(std::make_pair(tempStr,4));
             }
-            throw std::runtime_error("uncorrect expression");
+            tempStr = "";
         }
     }
     int count = 0;
@@ -53,12 +53,12 @@ void Calculator::ReadString(std::string str) {
         if (str[i] == ')') {
             count--;
             if (count < 0) {
-               throw std::runtime_error("uncorrect expression");
+                throw std::runtime_error("incorrect expression2");
             }
         }
     }
     if (count != 0) {
-        throw std::runtime_error("uncorrect expression");
+        throw std::runtime_error("incorrect expression3");
     }
     for (int i = 0; i < str.size(); ++i)
     {
@@ -67,30 +67,19 @@ void Calculator::ReadString(std::string str) {
             auto it = std::find_if(str.begin() + i + 1, str.end(), [](char const c) {return !isalnum(c); });
             str.insert(it, ')');
             str.insert(i, "(0");
-            int nnn = 0;
         }
     }
-    while ((ind = str.find("sin")) != std::string::npos)
+
+    std::stack<std:: string> stack;
+    for (int i = 0; i < str.length(); i++)
     {
-        str.erase(ind + 1, 2);
-    }
-    while ((ind = str.find("cos")) != std::string::npos)
-    {
-        str.erase(ind + 1, 2);
-    }
-    while ((ind = str.find("ln")) != std::string::npos)
-    {
-        str.erase(ind + 1, 1);
-    }
-    std::stack<char> stack;
-    for (auto c : str)
-    {
-        if (!isdigit(c) && ('.' != c))
+        std:: string c = {str[i]};
+        if (!(c >= "0" && c <= "9") && ("." != c))
         {
-            res += ' ';
-            if (')' == c)
+            res += " ";
+            if (")" == c)
             {
-                while (stack.top() != '(')
+                while (stack.top() != "(")
                 {
                     res += stack.top();
                     stack.pop();
@@ -98,23 +87,32 @@ void Calculator::ReadString(std::string str) {
                 }
                 stack.pop();
             }
-            else if ('(' == c)
+            else if ("(" == c)
             {
                 stack.push(c);
             }
-            else if (stack.empty() || (map[stack.top()] < map[c]))
+            else if ((stack.empty() || map[stack.top()] < map[c]) && (load.containsUnaryFunc(c) || load.containsBinaryFunc(c)))
             {
                 stack.push(c);
             }
             else
             {
+                while(!(load.containsUnaryFunc(tempStr) || load.containsBinaryFunc(tempStr)))
+                {
+                    tempStr += c;
+                    if (++i< str.length())
+                        c = str[i];
+                    else break;
+                }
+                --i;
+                stack.push(tempStr);
+
                 do
                 {
                     res += stack.top();
-                    res += ' ';
+                    res += " ";
                     stack.pop();
-                } while (!(stack.empty() || (map[stack.top()] < map[c])));
-                stack.push(c);
+                }while (!(stack.empty() || (map[stack.top()] < map[c])));
             }
         }
         else
@@ -124,7 +122,7 @@ void Calculator::ReadString(std::string str) {
     }
     while (!stack.empty())
     {
-        res += ' ';
+        res += " ";
         res += stack.top();
         stack.pop();
     }
@@ -133,11 +131,10 @@ void Calculator::ReadString(std::string str) {
 
 
 double Calculator::Solve() {
-    Loader load;
     double a, b;
     std::stack<double> stack;
     std::string s;
-    std::stringstream  tmp(input);
+    std::stringstream tmp(input);
     for (; tmp >> s;) {
         if (!isdigit(s[0])) {
             a = 0.0;
@@ -162,3 +159,7 @@ double Calculator::Solve() {
     }
     return stack.top();
 }
+
+void Calculator :: addDll(){
+    Loader();
+};
