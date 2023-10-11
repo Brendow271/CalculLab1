@@ -71,10 +71,10 @@ void Calculator::ReadString(std::string str) {
 // checking for neighboring operators
     for (int i = 0; i < str.size(); ++i) {
         std:: string c = {str[i]};
-        if (map.contains({c}) && c!="(" && c!=")") {
+        if (map.contains({c}) && c!="(") {
             if(i++ < str.length()){
                 c = str[i];
-                if(map.contains({c}) && c!="(" && c!=")")
+                if(map.contains({c}) && c!="(")
                     throw std::runtime_error("incorrect expression4");
                 else i--;
             }
@@ -141,17 +141,6 @@ void Calculator::ReadString(std::string str) {
                         stack.push(c);
                     }
                 }
-
-//            else if ((stack.empty() || map[stack.top()] < map[c]) && map.contains({c}))
-//                stack.push(c);
-//            else if (!stack.empty() && map.contains({c}) && (map[stack.top()] >= map[c]))//2^4 + sin(90)==
-//                {
-//                    res += stack.top();
-//                    res += " ";
-//                    stack.pop();
-//                    stack.push(c);
-//                }
-//                else
                 else
                 {
                     while(!(load.containsUnaryFunc(tempStr) || load.containsBinaryFunc(tempStr)))
@@ -167,12 +156,6 @@ void Calculator::ReadString(std::string str) {
                     --i;
                     stack.push(tempStr);
                     tempStr = "";
-//                    do
-//                    {
-//                        res += stack.top();
-//                        res += " ";
-//                        stack.pop();
-//                    }while (!(stack.empty() || (map[stack.top()] < map[c])));
                 }
         }
         else
