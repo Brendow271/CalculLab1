@@ -71,7 +71,7 @@ void Calculator::ReadString(std::string str) {
 // checking for neighboring operators
     for (int i = 0; i < str.size(); ++i) {
         std:: string c = {str[i]};
-        if (map.contains({c}) && c!="(") {
+        if (map.contains({c}) && c!="(" && c!=")") {
             if(i++ < str.length()){
                 c = str[i];
                 if(map.contains({c}) && c!="(")
@@ -93,16 +93,24 @@ void Calculator::ReadString(std::string str) {
             }
         }
     }
-
-//    for (int i = 0; i < str.size(); ++i)
-//    {
-//        if ((str[i] == '+' || str[i] == '-') && (0 == i || (!isalnum(str[i - 1]) && str[i - 1] != '.' && str[i - 1] != ')')))
-//        {
-//            auto it = std::find_if(str.begin() + i + 1, str.end(), [](char const c) {return !isalnum(c); });
-//            str.insert(it, ')');
-//            str.insert(i, "(0");
-//        }
-//    }
+    //Replacing unary minus
+    for (int i = 0; i < str.size(); i++) {
+        if (str.find("-") == 0 && str[i+1] != '('){
+            str.insert(0, "-");
+            str.replace(0, 1, "0");
+            i+=2;
+        } else if (str.find("-") == 0 && str[i+1] == '(') {
+            str.insert(1, "*");
+            str.insert(1, "1");
+            i+=2;
+        }
+        else if ((str[i] == '-' && str[i-1] == '(')) {
+            str.insert(i + 1, "-");
+            str.insert(i + 1, "+");
+            str.replace(i, i+1, "0");
+            i+=2;
+        }
+    }
 
 //rpn
     std::stack<std:: string> stack;
@@ -135,9 +143,12 @@ void Calculator::ReadString(std::string str) {
                     else
                     if (!stack.empty() && (map[stack.top()] >= map[c]))//==
                     {
-                        res += stack.top();
-                        res += " ";
-                        stack.pop();
+                        do
+                        {
+                            res += stack.top();
+                            res += " ";
+                            stack.pop();
+                        }while (!(stack.empty() || (map[stack.top()] < map[c])));
                         stack.push(c);
                     }
                 }
